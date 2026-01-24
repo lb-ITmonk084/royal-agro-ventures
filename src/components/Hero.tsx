@@ -15,7 +15,7 @@ const Hero = () => {
         <div className="animate-fade-up">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
             <Leaf size={18} />
-            <span className="text-sm font-medium">Since 2024</span>
+            <span className="text-sm font-medium">Since 2021</span>
           </div>
           
           <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
