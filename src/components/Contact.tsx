@@ -52,9 +52,13 @@ const Contact = () => {
             </div>
             <h3 className="font-serif text-xl font-semibold mb-4">Address</h3>
             <p className="text-primary-foreground/80">
-              Hyderabad, Rangareddy,
+              Plot No. 108, Hasthinapuram Central,
               <br />
-              Telangana, 500079
+              Indraprastha Colony, Phase 1,
+              <br />
+              Karmanghat, Hyderabad,
+              <br />
+              Rangareddy, Telangana, 500079
               <br />
               India
             </p>
