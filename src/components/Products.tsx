@@ -1,22 +1,118 @@
-import { Leaf, Sun } from "lucide-react";
+import { Leaf, Sun, Carrot, Apple, Wheat } from "lucide-react";
 import moringaImg from "@/assets/moringa.png";
 import tomatoImg from "@/assets/tomato.png";
 
 const Products = () => {
-  const products = [
+  const categories = [
     {
-      image: moringaImg,
-      name: "Dehydrated Moringa Leaves & Powder",
-      description: "Premium organic moringa sourced from the finest farms. Rich in nutrients and carefully processed to retain maximum nutritional value.",
-      icon: <Leaf className="w-5 h-5" />,
-      features: ["100% Organic", "Nutrient-Rich", "Fine Powder Available"],
+      title: "Dehydrated Vegetables",
+      icon: <Carrot className="w-5 h-5" />,
+      products: [
+        {
+          name: "Dehydrated Moringa Leaves & Powder",
+          description: "Premium organic moringa sourced from the finest farms. Rich in nutrients and carefully processed to retain maximum nutritional value.",
+          benefits: ["Rich in vitamins & minerals", "Supports immunity", "High protein content"],
+          image: moringaImg,
+          forms: "Leaves / Powder",
+        },
+        {
+          name: "Dehydrated Tomato Flakes",
+          description: "High-quality dehydrated tomato flakes perfect for culinary applications. Retains natural flavor and color.",
+          benefits: ["Rich in lycopene", "Natural antioxidants", "Long shelf life"],
+          image: tomatoImg,
+          forms: "Flakes / Powder",
+        },
+        {
+          name: "Dehydrated Carrot",
+          description: "Fresh carrots sourced directly from farmers and gently dehydrated to preserve natural sweetness, color, and nutrients.",
+          benefits: ["Rich in beta-carotene (Vitamin A)", "Supports eye health and immunity", "High antioxidant content"],
+          forms: "Flakes / Powder",
+        },
+        {
+          name: "Dehydrated Beetroot",
+          description: "Carefully processed beetroot with vibrant color and natural flavor.",
+          benefits: ["Improves blood circulation", "Supports stamina and energy", "Rich in iron and antioxidants"],
+          forms: "Flakes / Powder",
+        },
+        {
+          name: "Dehydrated Garlic",
+          description: "Premium quality garlic processed under controlled conditions to retain aroma and potency.",
+          benefits: ["Boosts immunity", "Supports heart health", "Natural antibacterial properties"],
+          forms: "Flakes / Powder",
+        },
+        {
+          name: "Dehydrated Ginger",
+          description: "High-quality ginger dried to preserve pungency and medicinal value.",
+          benefits: ["Aids digestion", "Anti-inflammatory properties", "Supports immunity"],
+          forms: "Slices / Powder",
+        },
+        {
+          name: "Red Chilli",
+          description: "Naturally dried red chillies with consistent heat and color.",
+          benefits: ["Rich in antioxidants", "Boosts metabolism", "Enhances digestion"],
+          forms: "Whole / Powder",
+        },
+      ],
     },
     {
-      image: tomatoImg,
-      name: "Dehydrated Tomato Flakes",
-      description: "High-quality dehydrated tomato flakes perfect for culinary applications. Retains natural flavor and color.",
-      icon: <Sun className="w-5 h-5" />,
-      features: ["Natural Flavor", "Long Shelf Life", "Premium Quality"],
+      title: "Herbs & Roots",
+      icon: <Leaf className="w-5 h-5" />,
+      products: [
+        {
+          name: "Turmeric",
+          description: "Naturally cultivated turmeric with high curcumin content, processed hygienically for maximum purity.",
+          benefits: ["Powerful anti-inflammatory", "Supports immunity", "Widely used in food and wellness industries"],
+          forms: "Fingers / Powder",
+        },
+        {
+          name: "Ashwagandha",
+          description: "Carefully sourced Ashwagandha roots processed to retain medicinal potency.",
+          benefits: ["Reduces stress", "Improves stamina and strength", "Supports overall wellness"],
+          forms: "Root / Powder",
+        },
+      ],
+    },
+    {
+      title: "Dehydrated Fruits",
+      icon: <Apple className="w-5 h-5" />,
+      products: [
+        {
+          name: "Pineapple",
+          description: "Naturally sweet pineapple processed without additives.",
+          benefits: ["Rich in Vitamin C", "Supports digestion", "Natural energy booster"],
+          forms: "Flakes / Powder",
+        },
+        {
+          name: "Banana",
+          description: "Ripe bananas dehydrated to preserve natural sweetness and nutrition.",
+          benefits: ["High in potassium", "Boosts energy", "Suitable for baby foods & bakery"],
+          forms: "Flakes / Powder",
+        },
+        {
+          name: "Guava Powder",
+          description: "Guava processed into fine powder retaining flavor and nutrients.",
+          benefits: ["High Vitamin C content", "Supports immunity", "Antioxidant rich"],
+          forms: "Powder",
+        },
+      ],
+    },
+    {
+      title: "Rice (Non-Basmati)",
+      icon: <Wheat className="w-5 h-5" />,
+      products: [
+        {
+          name: "Sona Masoori Rice",
+          description: "Lightweight, aromatic rice suitable for daily consumption and export markets.",
+          benefits: ["Low starch", "Easy digestion", "Preferred for South Indian cuisine"],
+          forms: "Grain",
+        },
+        {
+          name: "IR64 Parboiled Rice",
+          description: "Export-grade parboiled rice with excellent grain strength and shelf life.",
+          benefits: ["Nutrient retention", "Consistent cooking quality", "Suitable for bulk export"],
+          forms: "Grain",
+        },
+      ],
     },
   ];
 
@@ -26,58 +122,78 @@ const Products = () => {
         <div className="text-center mb-16">
           <span className="text-accent font-medium tracking-wider uppercase text-sm">Our Products</span>
           <h2 className="font-serif text-3xl md:text-5xl font-bold mt-4 mb-6">
-            Featured Products
+            Product Catalogue
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Carefully sourced and processed dehydrated products that meet the highest international standards.
+            Carefully sourced and processed products that meet the highest international standards. 
+            Each product retains natural color, flavor, aroma, and nutritional value.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {products.map((product, index) => (
-            <div
-              key={index}
-              className="bg-background rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-border/50 group"
-            >
-              <div className="relative h-64 overflow-hidden bg-muted/50">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-full object-contain p-8 group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute top-4 right-4 bg-primary text-primary-foreground p-2 rounded-full">
-                  {product.icon}
-                </div>
+        {categories.map((category, catIndex) => (
+          <div key={catIndex} className="mb-16 last:mb-0">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="p-3 bg-primary text-primary-foreground rounded-xl">
+                {category.icon}
               </div>
-              
-              <div className="p-8">
-                <h3 className="font-serif text-2xl font-semibold mb-4">{product.name}</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">{product.description}</p>
-                
-                <div className="flex flex-wrap gap-2">
-                  {product.features.map((feature, idx) => (
-                    <span
-                      key={idx}
-                      className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <h3 className="font-serif text-2xl font-semibold">{category.title}</h3>
             </div>
-          ))}
-        </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {category.products.map((product, prodIndex) => (
+                <div
+                  key={prodIndex}
+                  className="bg-background rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border/50 group"
+                >
+                  {product.image && (
+                    <div className="relative h-48 overflow-hidden bg-muted/30">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  )}
+                  
+                  <div className="p-6">
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <h4 className="font-serif text-lg font-semibold leading-tight">{product.name}</h4>
+                    </div>
+                    
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{product.description}</p>
+                    
+                    <div className="mb-4">
+                      <span className="text-xs font-medium text-accent uppercase tracking-wider">Available Forms</span>
+                      <p className="text-sm font-medium mt-1">{product.forms}</p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <span className="text-xs font-medium text-primary uppercase tracking-wider">Health Benefits</span>
+                      <ul className="space-y-1">
+                        {product.benefits.map((benefit, idx) => (
+                          <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                            <Sun className="w-3 h-3 text-accent mt-0.5 flex-shrink-0" />
+                            {benefit}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
 
         <div className="mt-16 text-center">
           <p className="text-muted-foreground mb-6">
-            Interested in our complete product range including spices, rice, and pulses?
+            Looking for custom packaging or bulk orders? We offer flexible solutions for all requirements.
           </p>
           <a
             href="#contact"
             className="inline-flex items-center gap-2 bg-accent hover:bg-accent/90 text-accent-foreground px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
           >
-            Request Full Catalogue
+            Request Quotation
           </a>
         </div>
       </div>

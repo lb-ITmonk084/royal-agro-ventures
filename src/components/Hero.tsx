@@ -19,16 +19,15 @@ const Hero = () => {
           </div>
           
           <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            Cultivating{" "}
-            <span className="text-gradient">Quality</span>
+            From Farm to{" "}
+            <span className="text-gradient">Global</span>
             <br />
-            Nurturing{" "}
-            <span className="text-gradient">Trust</span>
+            <span className="text-gradient">Markets</span>
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Premium dehydrated moringa leaves, powders & tomato flakes. 
-            We bring the finest agricultural products from India to the world.
+            Direct farmer sourcing, hygienic processing, and export-ready 
+            agricultural products you can rely on.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
