@@ -1,21 +1,21 @@
-import { Globe, Handshake, Shield } from "lucide-react";
+import { Tractor, Shield, CheckCircle } from "lucide-react";
 
 const About = () => {
   const highlights = [
     {
+      icon: <Tractor className="w-8 h-8" />,
+      title: "Direct Farmer Sourcing",
+      description: "We work directly with farmers, ensuring traceability and fair practices",
+    },
+    {
       icon: <Shield className="w-8 h-8" />,
-      title: "Quality Assured",
-      description: "We only sell what we promise",
+      title: "Quality Controlled",
+      description: "Strict hygiene and food safety standards at every stage",
     },
     {
-      icon: <Handshake className="w-8 h-8" />,
-      title: "Long-term Partners",
-      description: "Building relationships, not just deals",
-    },
-    {
-      icon: <Globe className="w-8 h-8" />,
-      title: "Global Reach",
-      description: "Export & import network worldwide",
+      icon: <CheckCircle className="w-8 h-8" />,
+      title: "Export Ready",
+      description: "Products processed to meet global quality expectations",
     },
   ];
 
@@ -25,12 +25,20 @@ const About = () => {
         <div className="max-w-4xl mx-auto text-center mb-16">
           <span className="text-accent font-medium tracking-wider uppercase text-sm">About Us</span>
           <h2 className="font-serif text-3xl md:text-5xl font-bold mt-4 mb-6">
-            More Than Just Business
+            From Farm to Global Markets
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            At Royal Agro Ventures, we believe agriculture is more than just a business—it's a bond of trust. 
-            We are proud to bring the finest rice, spices, and dehydrated products like moringa and tomato 
-            products to our buyers across the globe through our export and import network.
+          <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+            Royal Agro Ventures is a professionally managed agri-export company committed to supplying 
+            high-quality agricultural and dehydrated food products to domestic and international markets.
+          </p>
+          <p className="text-muted-foreground leading-relaxed mb-6">
+            We work directly with farmers, ensuring traceability, consistent quality, and fair sourcing practices. 
+            Every product is carefully selected, graded, and processed under strict hygiene and food safety standards.
+          </p>
+          <p className="text-muted-foreground leading-relaxed">
+            Our dehydration and processing methods are designed to retain natural color, flavor, aroma, and 
+            nutritional value, while meeting global quality expectations. From raw material procurement to 
+            final packaging, each stage follows controlled procedures to ensure safe, export-ready products.
           </p>
         </div>
 
@@ -51,9 +59,8 @@ const About = () => {
 
         <div className="bg-primary rounded-3xl p-8 md:p-12 text-primary-foreground text-center">
           <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-            "What makes us different is simple: we keep our word. Our company is built on strong values—
-            <span className="font-semibold">principles, discipline, consistency, and trust</span>—
-            and these guide us in every deal we make."
+            "At Royal Agro Ventures, we focus on <span className="font-semibold">quality, reliability, and long-term partnerships</span>, 
+            helping buyers source dependable agricultural products with confidence."
           </p>
         </div>
       </div>
