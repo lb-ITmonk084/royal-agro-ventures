@@ -43,8 +43,7 @@ const Chatbot = () => {
     { field: "name", question: "Great! Could you please share your email address?" },
     { field: "email", question: "Thank you! What's your phone number?" },
     { field: "phone", question: "Which product are you interested in? (Moringa, Tomato Flakes, Spices, Rice, Others)" },
-    { field: "product", question: "Please share any additional message or specific requirements." },
-    { field: "message", question: "Thank you for your enquiry! Our team will contact you shortly. Have a great day! 🌿" },
+    { field: "product", question: "Thank you for your enquiry! Our team will contact you shortly. Have a great day! 🌿" },
   ];
 
   const handleSend = () => {
@@ -59,8 +58,10 @@ const Chatbot = () => {
     setMessages((prev) => [...prev, userMessage]);
 
     const updatedEnquiry = { ...enquiry };
-    const fields: (keyof EnquiryData)[] = ["name", "email", "phone", "product", "message"];
-    updatedEnquiry[fields[step]] = input;
+    const fields: (keyof EnquiryData)[] = ["name", "email", "phone", "product"];
+    if (step < fields.length) {
+      updatedEnquiry[fields[step]] = input;
+    }
     setEnquiry(updatedEnquiry);
 
     setTimeout(async () => {
@@ -73,7 +74,7 @@ const Chatbot = () => {
         setMessages((prev) => [...prev, botResponse]);
         
         if (step === steps.length - 1) {
-          // Final step - save enquiry to database
+          // Final step (product entered) - save enquiry to database
           const { error } = await supabase.from("enquiries").insert({
             name: updatedEnquiry.name,
             email: updatedEnquiry.email,
