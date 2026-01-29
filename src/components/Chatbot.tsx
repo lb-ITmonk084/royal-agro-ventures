@@ -3,6 +3,7 @@ import { MessageCircle, X, Send, User, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
   id: number;
@@ -62,7 +63,7 @@ const Chatbot = () => {
     updatedEnquiry[fields[step]] = input;
     setEnquiry(updatedEnquiry);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (step < steps.length) {
         const botResponse: Message = {
           id: messages.length + 2,
@@ -72,12 +73,28 @@ const Chatbot = () => {
         setMessages((prev) => [...prev, botResponse]);
         
         if (step === steps.length - 1) {
-          // Final step - save enquiry
-          console.log("Enquiry submitted:", updatedEnquiry);
-          toast({
-            title: "Enquiry Submitted!",
-            description: "Thank you for reaching out. We'll get back to you soon.",
+          // Final step - save enquiry to database
+          const { error } = await supabase.from("enquiries").insert({
+            name: updatedEnquiry.name,
+            email: updatedEnquiry.email,
+            phone: updatedEnquiry.phone,
+            product: updatedEnquiry.product,
+            message: updatedEnquiry.message,
           });
+
+          if (error) {
+            console.error("Error saving enquiry:", error);
+            toast({
+              title: "Error",
+              description: "Failed to submit enquiry. Please try again.",
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: "Enquiry Submitted!",
+              description: "Thank you for reaching out. We'll get back to you soon.",
+            });
+          }
         }
         
         setStep((prev) => prev + 1);
