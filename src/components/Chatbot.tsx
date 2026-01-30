@@ -261,7 +261,7 @@ const Chatbot = () => {
               </div>
               <div className="flex-1">
                 <h3 className="font-semibold">Royal Agro Ventures</h3>
-                <p className="text-xs text-primary-foreground/70">AI Assistant</p>
+                <p className="text-xs text-primary-foreground/70">Chat with Charlie</p>
               </div>
               {enquirySubmitted && (
                 <Button 
