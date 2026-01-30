@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { MessageCircle, X, Send, User, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
 
 interface Message {
   id: number;
@@ -16,8 +17,46 @@ interface EnquiryData {
   email: string;
   phone: string;
   product: string;
-  message: string;
 }
+
+// Validation schemas for each field
+const nameSchema = z
+  .string()
+  .trim()
+  .min(2, "Name must be at least 2 characters")
+  .max(100, "Name must be less than 100 characters")
+  .regex(/^[a-zA-Z\s\-'.]+$/, "Name can only contain letters, spaces, hyphens, apostrophes, and periods");
+
+const emailSchema = z
+  .string()
+  .trim()
+  .email("Please enter a valid email address")
+  .max(255, "Email must be less than 255 characters");
+
+const phoneSchema = z
+  .string()
+  .trim()
+  .min(7, "Phone number must be at least 7 digits")
+  .max(20, "Phone number must be less than 20 characters")
+  .regex(/^[\d\s\-+()]+$/, "Phone number can only contain digits, spaces, hyphens, plus sign, and parentheses");
+
+const productSchema = z
+  .string()
+  .trim()
+  .min(2, "Product name must be at least 2 characters")
+  .max(100, "Product name must be less than 100 characters");
+
+// Rate limiting constants
+const RATE_LIMIT_WINDOW = 60000; // 1 minute
+const MAX_SUBMISSIONS_PER_WINDOW = 3;
+
+// Sanitize input to prevent XSS and injection
+const sanitizeInput = (input: string): string => {
+  return input
+    .trim()
+    .replace(/[<>]/g, '') // Remove potential HTML tags
+    .slice(0, 500); // Hard limit on input length
+};
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,23 +74,61 @@ const Chatbot = () => {
     email: "",
     phone: "",
     product: "",
-    message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const submissionTimestamps = useRef<number[]>([]);
   const { toast } = useToast();
 
   const steps = [
-    { field: "name", question: "Great! Could you please share your email address?" },
-    { field: "email", question: "Thank you! What's your phone number?" },
-    { field: "phone", question: "Which product are you interested in? (Moringa, Tomato Flakes, Spices, Rice, Others)" },
-    { field: "product", question: "Thank you for your enquiry! Our team will contact you shortly. Have a great day! 🌿" },
+    { field: "name", question: "Great! Could you please share your email address?", schema: nameSchema },
+    { field: "email", question: "Thank you! What's your phone number?", schema: emailSchema },
+    { field: "phone", question: "Which product are you interested in? (Moringa, Tomato Flakes, Spices, Rice, Others)", schema: phoneSchema },
+    { field: "product", question: "Thank you for your enquiry! Our team will contact you shortly. Have a great day! 🌿", schema: productSchema },
   ];
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  // Check rate limit
+  const isRateLimited = (): boolean => {
+    const now = Date.now();
+    // Remove timestamps outside the window
+    submissionTimestamps.current = submissionTimestamps.current.filter(
+      (timestamp) => now - timestamp < RATE_LIMIT_WINDOW
+    );
+    return submissionTimestamps.current.length >= MAX_SUBMISSIONS_PER_WINDOW;
+  };
+
+  // Validate current field input
+  const validateField = (fieldIndex: number, value: string): { success: boolean; error?: string } => {
+    const schema = steps[fieldIndex]?.schema;
+    if (!schema) return { success: true };
+
+    const result = schema.safeParse(value);
+    if (!result.success) {
+      return { success: false, error: result.error.errors[0]?.message || "Invalid input" };
+    }
+    return { success: true };
+  };
+
+  const handleSend = async () => {
+    if (!input.trim() || isSubmitting) return;
+
+    const sanitizedInput = sanitizeInput(input);
+    
+    // Validate the current field
+    const validation = validateField(step, sanitizedInput);
+    if (!validation.success) {
+      const errorMessage: Message = {
+        id: messages.length + 1,
+        text: `⚠️ ${validation.error} Please try again.`,
+        isBot: true,
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+      setInput("");
+      return;
+    }
 
     const userMessage: Message = {
       id: messages.length + 1,
-      text: input,
+      text: sanitizedInput,
       isBot: false,
     };
 
@@ -60,37 +137,54 @@ const Chatbot = () => {
     const updatedEnquiry = { ...enquiry };
     const fields: (keyof EnquiryData)[] = ["name", "email", "phone", "product"];
     if (step < fields.length) {
-      updatedEnquiry[fields[step]] = input;
+      updatedEnquiry[fields[step]] = sanitizedInput;
     }
     setEnquiry(updatedEnquiry);
 
+    setInput("");
+
     setTimeout(async () => {
       if (step < steps.length) {
-        const botResponse: Message = {
-          id: messages.length + 2,
-          text: steps[step].question,
-          isBot: true,
-        };
-        setMessages((prev) => [...prev, botResponse]);
-        
         if (step === steps.length - 1) {
-          // Final step (product entered) - save enquiry to database
+          // Final step (product entered) - check rate limit and save enquiry
+          if (isRateLimited()) {
+            const rateLimitMessage: Message = {
+              id: messages.length + 2,
+              text: "⚠️ You've submitted too many enquiries recently. Please wait a moment before trying again.",
+              isBot: true,
+            };
+            setMessages((prev) => [...prev, rateLimitMessage]);
+            return;
+          }
+
+          setIsSubmitting(true);
+          
           const { error } = await supabase.from("enquiries").insert({
             name: updatedEnquiry.name,
             email: updatedEnquiry.email,
             phone: updatedEnquiry.phone,
             product: updatedEnquiry.product,
-            message: updatedEnquiry.message,
           });
 
+          setIsSubmitting(false);
+
           if (error) {
-            console.error("Error saving enquiry:", error);
+            const errorMessage: Message = {
+              id: messages.length + 2,
+              text: "Sorry, there was an error submitting your enquiry. Please try again later.",
+              isBot: true,
+            };
+            setMessages((prev) => [...prev, errorMessage]);
             toast({
               title: "Error",
               description: "Failed to submit enquiry. Please try again.",
               variant: "destructive",
             });
+            return;
           } else {
+            // Record successful submission for rate limiting
+            submissionTimestamps.current.push(Date.now());
+            
             toast({
               title: "Enquiry Submitted!",
               description: "Thank you for reaching out. We'll get back to you soon.",
@@ -98,11 +192,15 @@ const Chatbot = () => {
           }
         }
         
+        const botResponse: Message = {
+          id: messages.length + 2,
+          text: steps[step].question,
+          isBot: true,
+        };
+        setMessages((prev) => [...prev, botResponse]);
         setStep((prev) => prev + 1);
       }
     }, 500);
-
-    setInput("");
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
