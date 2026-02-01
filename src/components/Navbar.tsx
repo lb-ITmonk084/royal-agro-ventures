@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShieldCheck } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
+import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +37,12 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
+            <Link to="/admin/login">
+              <Button variant="outline" size="sm" className="gap-2">
+                <ShieldCheck className="w-4 h-4" />
+                Admin
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -53,12 +61,18 @@ const Navbar = () => {
               <a
                 key={link.href}
                 href={link.href}
-                className="block py-3 text-foreground/70 hover:text-primary transition-colors duration-300 font-medium border-b border-border/50 last:border-0"
+                className="block py-3 text-foreground/70 hover:text-primary transition-colors duration-300 font-medium border-b border-border/50"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
               </a>
             ))}
+            <Link to="/admin/login" onClick={() => setIsOpen(false)}>
+              <Button variant="outline" size="sm" className="gap-2 mt-3 w-full">
+                <ShieldCheck className="w-4 h-4" />
+                Admin
+              </Button>
+            </Link>
           </div>
         )}
       </div>
