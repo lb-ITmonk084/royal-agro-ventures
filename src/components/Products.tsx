@@ -8,6 +8,21 @@ import tomatoImg from "@/assets/tomato.png";
 import tomatoFreshImg from "@/assets/tomato-fresh.jpg";
 import tomatoFlakesImg from "@/assets/tomato-flakes.jpg";
 import tomatoPowderImg from "@/assets/tomato-powder.jpg";
+import carrotFreshImg from "@/assets/carrot-fresh.jpg";
+import carrotFlakesImg from "@/assets/carrot-flakes.jpg";
+import carrotPowderImg from "@/assets/carrot-powder.jpg";
+import beetrootFreshImg from "@/assets/beetroot-fresh.jpg";
+import beetrootFlakesImg from "@/assets/beetroot-flakes.jpg";
+import beetrootPowderImg from "@/assets/beetroot-powder.jpg";
+import garlicFreshImg from "@/assets/garlic-fresh.jpg";
+import garlicFlakesImg from "@/assets/garlic-flakes.jpg";
+import garlicPowderImg from "@/assets/garlic-powder.jpg";
+import gingerFreshImg from "@/assets/ginger-fresh.jpg";
+import gingerSlicesImg from "@/assets/ginger-slices.jpg";
+import gingerPowderImg from "@/assets/ginger-powder.jpg";
+import chilliFreshImg from "@/assets/chilli-fresh.jpg";
+import chilliDriedImg from "@/assets/chilli-dried.jpg";
+import chilliPowderImg from "@/assets/chilli-powder.jpg";
 
 const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -94,30 +109,35 @@ const Products = () => {
           name: "Dehydrated Carrot",
           description: "Fresh carrots sourced directly from farmers and gently dehydrated to preserve natural sweetness, color, and nutrients.",
           benefits: ["Rich in beta-carotene (Vitamin A)", "Supports eye health and immunity", "High antioxidant content"],
+          images: [carrotFreshImg, carrotFlakesImg, carrotPowderImg],
           forms: "Flakes / Powder",
         },
         {
           name: "Dehydrated Beetroot",
           description: "Carefully processed beetroot with vibrant color and natural flavor.",
           benefits: ["Improves blood circulation", "Supports stamina and energy", "Rich in iron and antioxidants"],
+          images: [beetrootFreshImg, beetrootFlakesImg, beetrootPowderImg],
           forms: "Flakes / Powder",
         },
         {
           name: "Dehydrated Garlic",
           description: "Premium quality garlic processed under controlled conditions to retain aroma and potency.",
           benefits: ["Boosts immunity", "Supports heart health", "Natural antibacterial properties"],
+          images: [garlicFreshImg, garlicFlakesImg, garlicPowderImg],
           forms: "Flakes / Powder",
         },
         {
           name: "Dehydrated Ginger",
           description: "High-quality ginger dried to preserve pungency and medicinal value.",
           benefits: ["Aids digestion", "Anti-inflammatory properties", "Supports immunity"],
+          images: [gingerFreshImg, gingerSlicesImg, gingerPowderImg],
           forms: "Slices / Powder",
         },
         {
           name: "Red Chilli",
           description: "Naturally dried red chillies with consistent heat and color.",
           benefits: ["Rich in antioxidants", "Boosts metabolism", "Enhances digestion"],
+          images: [chilliFreshImg, chilliDriedImg, chilliPowderImg],
           forms: "Whole / Powder",
         },
       ],
