@@ -21,11 +21,11 @@ const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => 
   };
 
   return (
-    <div className="relative h-48 overflow-hidden bg-muted/30 group/carousel">
+    <div className="relative h-64 overflow-hidden bg-muted/30 group/carousel">
       <img
         src={images[currentIndex]}
         alt={`${name} - Image ${currentIndex + 1}`}
-        className="w-full h-full object-contain p-6 transition-transform duration-500"
+        className="w-full h-full object-cover transition-transform duration-500"
       />
       {images.length > 1 && (
         <>
