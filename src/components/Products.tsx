@@ -23,6 +23,21 @@ import gingerPowderImg from "@/assets/ginger-powder.jpg";
 import chilliFreshImg from "@/assets/chilli-fresh.jpg";
 import chilliDriedImg from "@/assets/chilli-dried.jpg";
 import chilliPowderImg from "@/assets/chilli-powder.jpg";
+import turmericFreshImg from "@/assets/turmeric-fresh.jpg";
+import turmericFingersImg from "@/assets/turmeric-fingers.jpg";
+import turmericPowderImg from "@/assets/turmeric-powder.jpg";
+import ashwagandhaFreshImg from "@/assets/ashwagandha-fresh.jpg";
+import ashwagandhaRootImg from "@/assets/ashwagandha-root.jpg";
+import ashwagandhaPowderImg from "@/assets/ashwagandha-powder.jpg";
+import pineappleFreshImg from "@/assets/pineapple-fresh.jpg";
+import pineappleDriedImg from "@/assets/pineapple-dried.jpg";
+import pineapplePowderImg from "@/assets/pineapple-powder.jpg";
+import bananaFreshImg from "@/assets/banana-fresh.jpg";
+import bananaDriedImg from "@/assets/banana-dried.jpg";
+import bananaPowderImg from "@/assets/banana-powder.jpg";
+import guavaFreshImg from "@/assets/guava-fresh.jpg";
+import guavaDriedImg from "@/assets/guava-dried.jpg";
+import guavaPowderImg from "@/assets/guava-powder.jpg";
 
 const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -150,12 +165,14 @@ const Products = () => {
           name: "Turmeric",
           description: "Naturally cultivated turmeric with high curcumin content, processed hygienically for maximum purity.",
           benefits: ["Powerful anti-inflammatory", "Supports immunity", "Widely used in food and wellness industries"],
+          images: [turmericFreshImg, turmericFingersImg, turmericPowderImg],
           forms: "Fingers / Powder",
         },
         {
           name: "Ashwagandha",
           description: "Carefully sourced Ashwagandha roots processed to retain medicinal potency.",
           benefits: ["Reduces stress", "Improves stamina and strength", "Supports overall wellness"],
+          images: [ashwagandhaFreshImg, ashwagandhaRootImg, ashwagandhaPowderImg],
           forms: "Root / Powder",
         },
       ],
@@ -168,18 +185,21 @@ const Products = () => {
           name: "Pineapple",
           description: "Naturally sweet pineapple processed without additives.",
           benefits: ["Rich in Vitamin C", "Supports digestion", "Natural energy booster"],
+          images: [pineappleFreshImg, pineappleDriedImg, pineapplePowderImg],
           forms: "Flakes / Powder",
         },
         {
           name: "Banana",
           description: "Ripe bananas dehydrated to preserve natural sweetness and nutrition.",
           benefits: ["High in potassium", "Boosts energy", "Suitable for baby foods & bakery"],
+          images: [bananaFreshImg, bananaDriedImg, bananaPowderImg],
           forms: "Flakes / Powder",
         },
         {
           name: "Guava Powder",
           description: "Guava processed into fine powder retaining flavor and nutrients.",
           benefits: ["High Vitamin C content", "Supports immunity", "Antioxidant rich"],
+          images: [guavaFreshImg, guavaDriedImg, guavaPowderImg],
           forms: "Powder",
         },
       ],
