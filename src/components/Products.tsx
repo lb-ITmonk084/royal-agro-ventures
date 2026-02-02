@@ -1,6 +1,74 @@
-import { Leaf, Sun, Carrot, Apple, Wheat } from "lucide-react";
+import { Leaf, Sun, Carrot, Apple, Wheat, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 import moringaImg from "@/assets/moringa.png";
+import moringaLeavesImg from "@/assets/moringa-leaves.jpg";
+import moringaPowderImg from "@/assets/moringa-powder.jpg";
+import moringaDriedImg from "@/assets/moringa-dried.jpg";
 import tomatoImg from "@/assets/tomato.png";
+import tomatoFreshImg from "@/assets/tomato-fresh.jpg";
+import tomatoFlakesImg from "@/assets/tomato-flakes.jpg";
+import tomatoPowderImg from "@/assets/tomato-powder.jpg";
+
+const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextImage = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  return (
+    <div className="relative h-48 overflow-hidden bg-muted/30 group/carousel">
+      <img
+        src={images[currentIndex]}
+        alt={`${name} - Image ${currentIndex + 1}`}
+        className="w-full h-full object-contain p-6 transition-transform duration-500"
+      />
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              prevImage();
+            }}
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background rounded-full p-1.5 opacity-0 group-hover/carousel:opacity-100 transition-opacity shadow-md"
+            aria-label="Previous image"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              nextImage();
+            }}
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background rounded-full p-1.5 opacity-0 group-hover/carousel:opacity-100 transition-opacity shadow-md"
+            aria-label="Next image"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+            {images.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setCurrentIndex(idx);
+                }}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  idx === currentIndex ? "bg-primary" : "bg-muted-foreground/30"
+                }`}
+                aria-label={`Go to image ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 const Products = () => {
   const categories = [
@@ -12,14 +80,14 @@ const Products = () => {
           name: "Dehydrated Moringa Leaves & Powder",
           description: "Premium organic moringa sourced from the finest farms. Rich in nutrients and carefully processed to retain maximum nutritional value.",
           benefits: ["Rich in vitamins & minerals", "Supports immunity", "High protein content"],
-          image: moringaImg,
+          images: [moringaImg, moringaLeavesImg, moringaDriedImg, moringaPowderImg],
           forms: "Leaves / Powder",
         },
         {
           name: "Dehydrated Tomato Flakes",
           description: "High-quality dehydrated tomato flakes perfect for culinary applications. Retains natural flavor and color.",
           benefits: ["Rich in lycopene", "Natural antioxidants", "Long shelf life"],
-          image: tomatoImg,
+          images: [tomatoImg, tomatoFreshImg, tomatoFlakesImg, tomatoPowderImg],
           forms: "Flakes / Powder",
         },
         {
@@ -145,15 +213,9 @@ const Products = () => {
                   key={prodIndex}
                   className="bg-background rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border/50 group"
                 >
-                  {product.image && (
-                    <div className="relative h-48 overflow-hidden bg-muted/30">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                  )}
+                  {product.images && product.images.length > 0 ? (
+                    <ImageCarousel images={product.images} name={product.name} />
+                  ) : null}
                   
                   <div className="p-6">
                     <div className="flex items-start justify-between gap-2 mb-3">
