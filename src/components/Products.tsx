@@ -38,6 +38,8 @@ import bananaPowderImg from "@/assets/banana-powder.jpg";
 import guavaFreshImg from "@/assets/guava-fresh.jpg";
 import guavaDriedImg from "@/assets/guava-dried.jpg";
 import guavaPowderImg from "@/assets/guava-powder.jpg";
+import sonaMasoori1Img from "@/assets/sona-masoori-1.jpg";
+import sonaMasoori2Img from "@/assets/sona-masoori-2.jpg";
 
 const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -212,6 +214,7 @@ const Products = () => {
           name: "Sona Masoori Rice",
           description: "Lightweight, aromatic rice suitable for daily consumption and export markets.",
           benefits: ["Low starch", "Easy digestion", "Preferred for South Indian cuisine"],
+          images: [sonaMasoori1Img, sonaMasoori2Img],
           forms: "Grain",
         },
         {
