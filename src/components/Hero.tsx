@@ -1,5 +1,6 @@
 import { ArrowDown, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoImg from "@/assets/logo.png";
 
 const Hero = () => {
   return (
@@ -7,6 +8,15 @@ const Hero = () => {
       id="home"
       className="min-h-screen flex items-center justify-center relative overflow-hidden leaf-pattern pt-20"
     >
+      {/* Logo Watermark */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <img 
+          src={logoImg} 
+          alt="" 
+          className="w-[500px] h-[500px] object-contain opacity-[0.06]"
+        />
+      </div>
+      
       {/* Decorative Elements */}
       <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-10 w-48 h-48 bg-accent/10 rounded-full blur-3xl" />
