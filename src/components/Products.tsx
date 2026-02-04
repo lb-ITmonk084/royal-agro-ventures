@@ -40,6 +40,7 @@ import guavaDriedImg from "@/assets/guava-dried.jpg";
 import guavaPowderImg from "@/assets/guava-powder.jpg";
 import sonaMasoori1Img from "@/assets/sona-masoori-1.jpg";
 import sonaMasoori2Img from "@/assets/sona-masoori-2.jpg";
+import ir64RiceImg from "@/assets/ir64-rice.jpg";
 
 const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -221,6 +222,7 @@ const Products = () => {
           name: "IR64 Parboiled Rice",
           description: "Export-grade parboiled rice with excellent grain strength and shelf life.",
           benefits: ["Nutrient retention", "Consistent cooking quality", "Suitable for bulk export"],
+          images: [ir64RiceImg],
           forms: "Grain",
         },
       ],
