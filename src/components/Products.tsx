@@ -145,7 +145,7 @@ const Products = () => {
           name: "Dehydrated Ginger",
           description: "High-quality ginger dried to preserve pungency and medicinal value.",
           benefits: ["Aids digestion", "Anti-inflammatory properties", "Supports immunity"],
-          images: [gingerFreshImg, gingerSlicesImg, gingerPowderImg],
+          images: [gingerSlicesImg, gingerPowderImg],
           forms: "Slices / Powder",
         },
         {
