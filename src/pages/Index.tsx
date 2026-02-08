@@ -8,20 +8,32 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import Contact from "@/components/Contact";
 import Chatbot from "@/components/Chatbot";
 import Footer from "@/components/Footer";
+import logoImg from "@/assets/logo.png";
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      <Hero />
-      <About />
-      <OurProcess />
-      <Values />
-      <Products />
-      <WhyChooseUs />
-      <Contact />
-      <Footer />
-      <Chatbot />
+    <div className="min-h-screen relative">
+      {/* Global Watermark */}
+      <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-0">
+        <img 
+          src={logoImg} 
+          alt="" 
+          className="w-[500px] h-[500px] object-contain opacity-[0.036]"
+        />
+      </div>
+      
+      <div className="relative z-10">
+        <Navbar />
+        <Hero />
+        <About />
+        <OurProcess />
+        <Values />
+        <Products />
+        <WhyChooseUs />
+        <Contact />
+        <Footer />
+        <Chatbot />
+      </div>
     </div>
   );
 };
