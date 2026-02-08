@@ -1,5 +1,6 @@
 import { Leaf, Sun, Carrot, Apple, Wheat, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import ImageLightbox from "./ImageLightbox";
 import moringaImg from "@/assets/moringa.png";
 import moringaLeavesImg from "@/assets/moringa-leaves.jpg";
 import moringaPowderImg from "@/assets/moringa-powder.jpg";
@@ -42,7 +43,13 @@ import sonaMasoori1Img from "@/assets/sona-masoori-1.jpg";
 import sonaMasoori2Img from "@/assets/sona-masoori-2.jpg";
 import ir64RiceImg from "@/assets/ir64-rice.jpg";
 
-const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => {
+interface ImageCarouselProps {
+  images: string[];
+  name: string;
+  onImageClick: (images: string[], index: number, name: string) => void;
+}
+
+const ImageCarousel = ({ images, name, onImageClick }: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextImage = () => {
@@ -58,13 +65,15 @@ const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => 
       <img
         src={images[currentIndex]}
         alt={`${name} - Image ${currentIndex + 1}`}
-        className="w-full h-full object-cover transition-transform duration-500"
+        className="w-full h-full object-cover transition-transform duration-500 cursor-pointer hover:scale-105"
+        onClick={() => onImageClick(images, currentIndex, name)}
       />
       {images.length > 1 && (
         <>
           <button
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               prevImage();
             }}
             className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background rounded-full p-1.5 opacity-0 group-hover/carousel:opacity-100 transition-opacity shadow-md"
@@ -75,6 +84,7 @@ const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => 
           <button
             onClick={(e) => {
               e.preventDefault();
+              e.stopPropagation();
               nextImage();
             }}
             className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background rounded-full p-1.5 opacity-0 group-hover/carousel:opacity-100 transition-opacity shadow-md"
@@ -88,6 +98,7 @@ const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => 
                 key={idx}
                 onClick={(e) => {
                   e.preventDefault();
+                  e.stopPropagation();
                   setCurrentIndex(idx);
                 }}
                 className={`w-2 h-2 rounded-full transition-colors ${
@@ -104,6 +115,27 @@ const ImageCarousel = ({ images, name }: { images: string[]; name: string }) => 
 };
 
 const Products = () => {
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxProductName, setLightboxProductName] = useState("");
+
+  const handleImageClick = (images: string[], index: number, name: string) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxProductName(name);
+    setLightboxOpen(true);
+  };
+
+  const handleLightboxNext = () => {
+    setLightboxIndex((prev) => (prev + 1) % lightboxImages.length);
+  };
+
+  const handleLightboxPrev = () => {
+    setLightboxIndex((prev) => (prev - 1 + lightboxImages.length) % lightboxImages.length);
+  };
+
   const categories = [
     {
       title: "Dehydrated Vegetables",
@@ -259,7 +291,11 @@ const Products = () => {
                   className="bg-background rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border/50 group"
                 >
                   {product.images && product.images.length > 0 ? (
-                    <ImageCarousel images={product.images} name={product.name} />
+                    <ImageCarousel 
+                      images={product.images} 
+                      name={product.name} 
+                      onImageClick={handleImageClick}
+                    />
                   ) : null}
                   
                   <div className="p-6">
@@ -304,6 +340,18 @@ const Products = () => {
           </a>
         </div>
       </div>
+
+      {/* Image Lightbox */}
+      <ImageLightbox
+        images={lightboxImages}
+        currentIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        onNext={handleLightboxNext}
+        onPrev={handleLightboxPrev}
+        onIndexChange={setLightboxIndex}
+        productName={lightboxProductName}
+      />
     </section>
   );
 };
