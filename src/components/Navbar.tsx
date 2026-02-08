@@ -21,7 +21,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <a href="#home" className="flex items-center gap-3">
             <img src={logo} alt="Royal Agro Ventures" className="h-16 w-auto" />
-            <span className="font-serif text-xl font-semibold text-primary hidden sm:block">
+            <span className="font-serif text-base sm:text-xl font-semibold text-primary">
               Royal Agro Ventures
             </span>
           </a>
