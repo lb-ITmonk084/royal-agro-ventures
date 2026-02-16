@@ -1,5 +1,6 @@
 import { Leaf, Sun, Carrot, Apple, Wheat, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import ImageLightbox from "./ImageLightbox";
 import moringaImg from "@/assets/moringa.png";
 import moringaLeavesImg from "@/assets/moringa-leaves.jpg";
@@ -114,7 +115,78 @@ const ImageCarousel = ({ images, name, onImageClick }: ImageCarouselProps) => {
   );
 };
 
+interface CategoryProps {
+  category: {
+    title: string;
+    icon: React.ReactNode;
+    products: {
+      name: string;
+      description: string;
+      benefits: string[];
+      images: string[];
+      forms: string;
+    }[];
+  };
+  onImageClick: (images: string[], index: number, name: string) => void;
+}
+
+const CategoryBlock = ({ category, onImageClick }: CategoryProps) => {
+  const [ref, visible] = useScrollReveal();
+
+  return (
+    <div ref={ref} className="mb-16 last:mb-0">
+      <div className={`flex items-center gap-3 mb-8 reveal-left ${visible ? "visible" : ""}`}>
+        <div className="p-3 bg-primary text-primary-foreground rounded-xl">
+          {category.icon}
+        </div>
+        <h3 className="font-serif text-2xl font-semibold">{category.title}</h3>
+      </div>
+
+      <div className={`grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children ${visible ? "visible" : ""}`}>
+        {category.products.map((product, prodIndex) => (
+          <div
+            key={prodIndex}
+            className="bg-background rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border/50 group"
+          >
+            {product.images && product.images.length > 0 ? (
+              <ImageCarousel 
+                images={product.images} 
+                name={product.name} 
+                onImageClick={onImageClick}
+              />
+            ) : null}
+            
+            <div className="p-6">
+              <div className="flex items-start justify-between gap-2 mb-3">
+                <h4 className="font-serif text-lg font-semibold leading-tight">{product.name}</h4>
+              </div>
+              <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{product.description}</p>
+              <div className="mb-4">
+                <span className="text-xs font-medium text-accent uppercase tracking-wider">Available Forms</span>
+                <p className="text-sm font-medium mt-1">{product.forms}</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-xs font-medium text-primary uppercase tracking-wider">Health Benefits</span>
+                <ul className="space-y-1">
+                  {product.benefits.map((benefit, idx) => (
+                    <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                      <Sun className="w-3 h-3 text-accent mt-0.5 flex-shrink-0" />
+                      {benefit}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Products = () => {
+  const [headerRef, headerVisible] = useScrollReveal();
+
   // Lightbox state
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
@@ -264,7 +336,7 @@ const Products = () => {
   return (
     <section id="products" className="py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div ref={headerRef} className={`text-center mb-16 reveal ${headerVisible ? "visible" : ""}`}>
           <span className="text-accent font-medium tracking-wider uppercase text-sm">Our Products</span>
           <h2 className="font-serif text-3xl md:text-5xl font-bold mt-4 mb-6">
             Product Catalogue
@@ -276,56 +348,7 @@ const Products = () => {
         </div>
 
         {categories.map((category, catIndex) => (
-          <div key={catIndex} className="mb-16 last:mb-0">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="p-3 bg-primary text-primary-foreground rounded-xl">
-                {category.icon}
-              </div>
-              <h3 className="font-serif text-2xl font-semibold">{category.title}</h3>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.products.map((product, prodIndex) => (
-                <div
-                  key={prodIndex}
-                  className="bg-background rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-border/50 group"
-                >
-                  {product.images && product.images.length > 0 ? (
-                    <ImageCarousel 
-                      images={product.images} 
-                      name={product.name} 
-                      onImageClick={handleImageClick}
-                    />
-                  ) : null}
-                  
-                  <div className="p-6">
-                    <div className="flex items-start justify-between gap-2 mb-3">
-                      <h4 className="font-serif text-lg font-semibold leading-tight">{product.name}</h4>
-                    </div>
-                    
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{product.description}</p>
-                    
-                    <div className="mb-4">
-                      <span className="text-xs font-medium text-accent uppercase tracking-wider">Available Forms</span>
-                      <p className="text-sm font-medium mt-1">{product.forms}</p>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <span className="text-xs font-medium text-primary uppercase tracking-wider">Health Benefits</span>
-                      <ul className="space-y-1">
-                        {product.benefits.map((benefit, idx) => (
-                          <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
-                            <Sun className="w-3 h-3 text-accent mt-0.5 flex-shrink-0" />
-                            {benefit}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <CategoryBlock key={catIndex} category={category} onImageClick={handleImageClick} />
         ))}
 
         <div className="mt-16 text-center">
