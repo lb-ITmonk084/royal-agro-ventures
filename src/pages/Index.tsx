@@ -4,6 +4,7 @@ import About from "@/components/About";
 import OurProcess from "@/components/OurProcess";
 import Values from "@/components/Values";
 import Products from "@/components/Products";
+import Licenses from "@/components/Licenses";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Contact from "@/components/Contact";
 import Chatbot from "@/components/Chatbot";
@@ -29,6 +30,7 @@ const Index = () => {
         <OurProcess />
         <Values />
         <Products />
+        <Licenses />
         <WhyChooseUs />
         <Contact />
         <Footer />
