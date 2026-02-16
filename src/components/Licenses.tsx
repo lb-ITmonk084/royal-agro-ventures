@@ -1,4 +1,5 @@
 import { ShieldCheck } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import apedaImg from "@/assets/license-apeda.jpeg";
 import dgftImg from "@/assets/license-dgft.jpeg";
 import fssaiImg from "@/assets/license-fssai.jpg";
@@ -12,10 +13,13 @@ const licenses = [
 ];
 
 const Licenses = () => {
+  const [headerRef, headerVisible] = useScrollReveal();
+  const [cardsRef, cardsVisible] = useScrollReveal();
+
   return (
     <section id="licenses" className="py-24 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div ref={headerRef} className={`text-center mb-16 reveal ${headerVisible ? "visible" : ""}`}>
           <span className="text-accent font-medium tracking-wider uppercase text-sm">Certifications</span>
           <h2 className="font-serif text-3xl md:text-5xl font-bold mt-4 mb-6">
             Licensed & Certified
@@ -25,7 +29,7 @@ const Licenses = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div ref={cardsRef} className={`grid grid-cols-2 md:grid-cols-4 gap-6 stagger-children ${cardsVisible ? "visible" : ""}`}>
           {licenses.map((license, index) => (
             <div
               key={index}

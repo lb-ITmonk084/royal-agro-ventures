@@ -1,6 +1,11 @@
 import { Tractor, Shield, CheckCircle } from "lucide-react";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const About = () => {
+  const [headerRef, headerVisible] = useScrollReveal();
+  const [cardsRef, cardsVisible] = useScrollReveal();
+  const [quoteRef, quoteVisible] = useScrollReveal();
+
   const highlights = [
     {
       icon: <Tractor className="w-8 h-8" />,
@@ -22,7 +27,7 @@ const About = () => {
   return (
     <section id="about" className="py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center mb-16">
+        <div ref={headerRef} className={`max-w-4xl mx-auto text-center mb-16 reveal ${headerVisible ? "visible" : ""}`}>
           <span className="text-accent font-medium tracking-wider uppercase text-sm">About Us</span>
           <h2 className="font-serif text-3xl md:text-5xl font-bold mt-4 mb-6">
             From Farm to Global Markets
@@ -42,7 +47,7 @@ const About = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div ref={cardsRef} className={`grid md:grid-cols-3 gap-8 mb-16 stagger-children ${cardsVisible ? "visible" : ""}`}>
           {highlights.map((item, index) => (
             <div
               key={index}
@@ -57,7 +62,7 @@ const About = () => {
           ))}
         </div>
 
-        <div className="bg-primary rounded-3xl p-8 md:p-12 text-primary-foreground text-center">
+        <div ref={quoteRef} className={`bg-primary rounded-3xl p-8 md:p-12 text-primary-foreground text-center reveal-scale ${quoteVisible ? "visible" : ""}`}>
           <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
             "At Royal Agro Ventures, we focus on <span className="font-semibold">quality, reliability, and long-term partnerships</span>, 
             helping buyers source dependable agricultural products with confidence."
