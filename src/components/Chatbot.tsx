@@ -175,12 +175,34 @@ const Chatbot = () => {
     }
   };
 
+  const MAX_MESSAGE_LENGTH = 1000;
+  const MAX_MESSAGES_PER_SESSION = 50;
+
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    const trimmedInput = input.trim();
+    if (!trimmedInput || isLoading) return;
+
+    if (trimmedInput.length > MAX_MESSAGE_LENGTH) {
+      toast({
+        title: "Message too long",
+        description: `Please keep messages under ${MAX_MESSAGE_LENGTH} characters.`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (messages.length >= MAX_MESSAGES_PER_SESSION) {
+      toast({
+        title: "Session limit reached",
+        description: "Please start a new chat.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     const userMessage: Message = {
       id: messages.length + 1,
-      text: input.trim(),
+      text: trimmedInput,
       isBot: false,
     };
 

@@ -69,6 +69,29 @@ Deno.serve(async (req) => {
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const adminSupabase = createClient(supabaseUrl, serviceRoleKey);
 
+    // Check if any admin already exists (disable after first admin)
+    const { data: existingAdmins, error: adminCheckError } = await adminSupabase
+      .from("user_roles")
+      .select("id")
+      .eq("role", "admin")
+      .limit(1);
+
+    if (adminCheckError) {
+      console.error("Error checking existing admins:", adminCheckError);
+      return new Response(
+        JSON.stringify({ error: "Failed to check existing admins" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    if (existingAdmins && existingAdmins.length > 0) {
+      console.warn("Admin setup attempted but admin already exists");
+      return new Response(
+        JSON.stringify({ error: "Admin setup is disabled. An admin already exists. Contact the existing admin for access." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     // Check if user already has admin role
     const { data: existingRole, error: checkError } = await adminSupabase
       .from("user_roles")
