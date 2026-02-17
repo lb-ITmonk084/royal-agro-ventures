@@ -50,9 +50,14 @@ const Contact = () => {
               <Mail className="w-6 h-6" />
             </div>
             <h3 className="font-serif text-xl font-semibold mb-4">Email</h3>
-            <a href="mailto:royalagroventure@gmail.com" className="text-primary-foreground/80 hover:text-accent transition-colors break-all">
-              royalagroventure@gmail.com
-            </a>
+            <div className="space-y-2 text-primary-foreground/80">
+              <a href="mailto:royalagroventure@gmail.com" className="block hover:text-accent transition-colors break-all">
+                royalagroventure@gmail.com
+              </a>
+              <a href="mailto:info@royalagroventures.com" className="block hover:text-accent transition-colors break-all">
+                info@royalagroventures.com
+              </a>
+            </div>
           </div>
 
           <div className="text-center p-8 bg-primary-foreground/10 rounded-2xl backdrop-blur-sm">
