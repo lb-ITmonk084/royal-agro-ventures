@@ -16,20 +16,6 @@ const Contact = () => {
           <p className="text-lg text-primary-foreground/80 max-w-2xl mx-auto">
             Ready to partner with us? Reach out for enquiries, bulk orders, or to learn more about our products.
           </p>
-          
-          <div className="mt-8">
-            <span className="text-accent font-medium tracking-wider uppercase text-sm">Licensed & Certified</span>
-            <div className="flex flex-wrap justify-center gap-3 mt-3">
-              {["MSME", "APEDA", "IEC", "GST", "FSSAI"].map((license) => (
-                <span
-                  key={license}
-                  className="px-4 py-2 bg-accent text-accent-foreground rounded-full text-sm font-semibold tracking-wide"
-                >
-                  {license}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
 
         <div ref={cardsRef} className={`grid md:grid-cols-3 gap-8 max-w-4xl mx-auto stagger-children ${cardsVisible ? "visible" : ""}`}>
