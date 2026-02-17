@@ -142,21 +142,43 @@ const Chatbot = () => {
     onDone();
   };
 
+  const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validatePhone = (phone: string) => /^[\d\s+()-]+$/.test(phone);
+
   const checkAndSaveEnquiry = async (response: string) => {
     const match = response.match(/\[ENQUIRY_DATA\](.*?)\[\/ENQUIRY_DATA\]/);
     if (match) {
       try {
         const enquiryData: EnquiryData = JSON.parse(match[1]);
-        
+
+        // Validate extracted enquiry data before saving
+        if (
+          !enquiryData.name?.trim() ||
+          !validateEmail(enquiryData.email) ||
+          !validatePhone(enquiryData.phone) ||
+          !enquiryData.product?.trim() ||
+          enquiryData.name.length > 200 ||
+          enquiryData.email.length > 255 ||
+          enquiryData.phone.length > 30 ||
+          enquiryData.product.length > 200
+        ) {
+          if (import.meta.env.DEV) {
+            console.error("Invalid enquiry data extracted from AI response");
+          }
+          return;
+        }
+
         const { error } = await supabase.from("enquiries").insert({
-          name: enquiryData.name,
-          email: enquiryData.email,
-          phone: enquiryData.phone,
-          product: enquiryData.product,
+          name: enquiryData.name.trim(),
+          email: enquiryData.email.trim(),
+          phone: enquiryData.phone.trim(),
+          product: enquiryData.product.trim(),
         });
 
         if (error) {
-          console.error("Failed to save enquiry:", error);
+          if (import.meta.env.DEV) {
+            console.error("Failed to save enquiry:", error);
+          }
           toast({
             title: "Error",
             description: "Failed to save your enquiry. Please try again.",
@@ -170,7 +192,9 @@ const Chatbot = () => {
           });
         }
       } catch (e) {
-        console.error("Failed to parse enquiry data:", e);
+        if (import.meta.env.DEV) {
+          console.error("Failed to parse enquiry data:", e);
+        }
       }
     }
   };
