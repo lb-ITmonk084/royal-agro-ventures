@@ -21,14 +21,34 @@ interface EnquiryData {
 
 const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/enquiry-chat`;
 
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good Morning! ☀️";
+  if (hour < 17) return "Good Afternoon! 🌤️";
+  return "Good Evening! 🌙";
+};
+
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [enquirySubmitted, setEnquirySubmitted] = useState(false);
+  const [popupGreeting, setPopupGreeting] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+
+  // Show greeting popup on load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isOpen) {
+        setPopupGreeting(`${getGreeting()} Welcome to Royal Agro Ventures! 🌿 Chat with us!`);
+        setShowPopup(true);
+      }
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -289,9 +309,24 @@ const Chatbot = () => {
 
   return (
     <>
+      {/* Greeting Popup */}
+      {showPopup && !isOpen && (
+        <div className="fixed bottom-[6.5rem] right-6 z-50 max-w-[260px] animate-fade-in">
+          <div className="bg-background border border-border rounded-2xl rounded-br-none p-3 shadow-xl relative">
+            <button
+              onClick={() => setShowPopup(false)}
+              className="absolute -top-2 -left-2 w-5 h-5 bg-muted rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground text-xs"
+            >
+              ✕
+            </button>
+            <p className="text-sm font-medium text-foreground">{popupGreeting}</p>
+          </div>
+        </div>
+      )}
+
       {/* Chat Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => { setIsOpen(!isOpen); setShowPopup(false); }}
         className="fixed bottom-6 right-6 z-50 w-18 h-18 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 group"
       >
         {/* Pulsing ring */}
