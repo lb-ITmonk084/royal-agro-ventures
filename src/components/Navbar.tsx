@@ -1,11 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Menu, X, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
 
+const COLORS = [
+  "#e74c3c", "#2ecc71", "#3498db", "#f39c12", "#9b59b6",
+  "#1abc9c", "#e67e22", "#e91e63", "#00bcd4", "#ff5722",
+];
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [nameColor, setNameColor] = useState("hsl(142 45% 25%)");
+
+  const randomizeColor = useCallback(() => {
+    setNameColor(COLORS[Math.floor(Math.random() * COLORS.length)]);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", randomizeColor);
+    return () => window.removeEventListener("scroll", randomizeColor);
+  }, [randomizeColor]);
 
   const navLinks = [
     { href: "#home", label: "Home" },
@@ -21,7 +36,10 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           <a href="#home" className="flex items-center gap-3">
             <img src={logo} alt="Royal Agro Ventures" className="h-16 w-auto" />
-            <span className="font-serif text-base sm:text-xl font-semibold text-primary">
+            <span
+              className="font-serif text-base sm:text-xl font-semibold transition-colors duration-300"
+              style={{ color: nameColor }}
+            >
               Royal Agro Ventures
             </span>
           </a>
