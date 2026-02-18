@@ -44,37 +44,18 @@ const Navbar = () => {
             </span>
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-foreground/70 hover:text-primary transition-colors duration-300 font-medium"
-              >
-                {link.label}
-              </a>
-            ))}
-            <Link to="/admin/login">
-              <Button variant="outline" size="sm" className="gap-2">
-                <ShieldCheck className="w-4 h-4" />
-                Admin
-              </Button>
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
+          {/* Menu Button */}
           <button
-            className="md:hidden p-2 text-foreground"
+            className="p-2 text-foreground"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Menu Navigation */}
         {isOpen && (
-          <div className="md:hidden mt-4 pb-4 animate-fade-in">
+          <div className="mt-4 pb-4 animate-fade-in">
             {navLinks.map((link) => (
               <a
                 key={link.href}
