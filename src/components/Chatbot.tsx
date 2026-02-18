@@ -39,16 +39,22 @@ const Chatbot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
-  // Show greeting popup on load
+  // Show greeting popup on load, auto-hide after 15s
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const showTimer = setTimeout(() => {
       if (!isOpen) {
         setPopupGreeting(`${getGreeting()} Welcome to Royal Agro Ventures! 🌿 Chat with us!`);
         setShowPopup(true);
       }
     }, 2000);
-    return () => clearTimeout(timer);
+    return () => clearTimeout(showTimer);
   }, []);
+
+  useEffect(() => {
+    if (!showPopup) return;
+    const hideTimer = setTimeout(() => setShowPopup(false), 15000);
+    return () => clearTimeout(hideTimer);
+  }, [showPopup]);
 
   // Scroll to bottom when messages change
   useEffect(() => {
