@@ -19,7 +19,7 @@ const Index = () => {
         <img 
           src={logoImg} 
           alt="" 
-          className="w-[500px] h-[500px] object-contain opacity-[0.036]"
+          className="w-[500px] h-[500px] object-contain opacity-[0.036] animate-[spin_20s_linear_infinite]"
         />
       </div>
       
