@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, User, Bot, Loader2 } from "lucide-react";
+import { X, Send, User, Bot, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import logoImg from "@/assets/logo.png";
 
 interface Message {
   id: number;
@@ -291,9 +292,19 @@ const Chatbot = () => {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-accent hover:bg-accent/90 text-accent-foreground rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+        className="fixed bottom-6 right-6 z-50 w-18 h-18 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 group"
       >
-        {isOpen ? <X size={28} /> : <MessageCircle size={28} />}
+        {/* Pulsing ring */}
+        {!isOpen && (
+          <span className="absolute inset-0 rounded-full bg-accent/40 animate-ping" />
+        )}
+        <span className="relative w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg border-2 border-accent/30">
+          {isOpen ? (
+            <X size={28} className="text-primary-foreground" />
+          ) : (
+            <img src={logoImg} alt="Chat" className="w-10 h-10 object-contain rounded-full" />
+          )}
+        </span>
       </button>
 
       {/* Chat Window */}
