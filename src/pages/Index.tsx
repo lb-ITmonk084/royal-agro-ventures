@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import WhatWeSupply from "@/components/WhatWeSupply";
 import About from "@/components/About";
 import OurProcess from "@/components/OurProcess";
 import Values from "@/components/Values";
@@ -26,6 +27,7 @@ const Index = () => {
       <div className="relative z-10">
         <Navbar />
         <Hero />
+        <WhatWeSupply />
         <About />
         <OurProcess />
         <Values />
