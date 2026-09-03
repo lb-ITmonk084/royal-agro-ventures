@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Menu, X, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.png";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,6 @@ const COLORS = [
 ];
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [nameColor, setNameColor] = useState("hsl(142 45% 25%)");
 
   const randomizeColor = useCallback(() => {
@@ -44,36 +43,44 @@ const Navbar = () => {
             </span>
           </a>
 
-          {/* Menu Button */}
-          <button
-            className="p-2 text-foreground"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Menu Navigation */}
-        {isOpen && (
-          <div className="mt-4 pb-4 animate-fade-in">
+          {/* Horizontal Navigation */}
+          <div className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="block py-3 text-foreground/70 hover:text-primary transition-colors duration-300 font-medium border-b border-border/50"
-                onClick={() => setIsOpen(false)}
+                className="text-foreground/70 hover:text-primary transition-colors duration-300 font-medium"
               >
                 {link.label}
               </a>
             ))}
-            <Link to="/admin/login" onClick={() => setIsOpen(false)}>
-              <Button variant="outline" size="sm" className="gap-2 mt-3 w-full">
+            <Link to="/admin/login">
+              <Button variant="outline" size="sm" className="gap-2">
                 <ShieldCheck className="w-4 h-4" />
                 Admin
               </Button>
             </Link>
           </div>
-        )}
+
+          {/* Mobile Navigation */}
+          <div className="flex md:hidden items-center gap-4">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-foreground/70 hover:text-primary transition-colors duration-300 font-medium"
+              >
+                {link.label}
+              </a>
+            ))}
+            <Link to="/admin/login">
+              <Button variant="outline" size="sm" className="gap-2">
+                <ShieldCheck className="w-4 h-4" />
+                Admin
+              </Button>
+            </Link>
+          </div>
+        </div>
       </div>
     </nav>
   );
