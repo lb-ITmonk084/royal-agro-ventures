@@ -1,72 +1,108 @@
-import { Tractor, Shield, CheckCircle } from "lucide-react";
+import { CheckCircle2, Package, Users, Globe, Award, BadgeCheck } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import aboutFarmer from "@/assets/about-farmer.jpg";
+import aboutWarehouse from "@/assets/about-warehouse1.jpg";
+import aboutFacility from "@/assets/about-facility.jpg";
+import aboutStorage from "@/assets/about-storage.jpg";
 
 const About = () => {
-  const [headerRef, headerVisible] = useScrollReveal();
-  const [cardsRef, cardsVisible] = useScrollReveal();
-  const [quoteRef, quoteVisible] = useScrollReveal();
+  const [contentRef, contentVisible] = useScrollReveal();
+  const [statsRef, statsVisible] = useScrollReveal();
 
   const highlights = [
-    {
-      icon: <Tractor className="w-8 h-8" />,
-      title: "Direct Farmer Sourcing",
-      description: "We work directly with farmers, ensuring traceability and fair practices",
-    },
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Quality Controlled",
-      description: "Strict hygiene and food safety standards at every stage",
-    },
-    {
-      icon: <CheckCircle className="w-8 h-8" />,
-      title: "Export Ready",
-      description: "Products processed to meet global quality expectations",
-    },
+    "Direct sourcing from Indian farms",
+    "Advanced processing and quality control",
+    "Customer-focused approach",
+    "Global standards & compliance",
+  ];
+
+  const stats = [
+    { icon: <Package className="w-8 h-8" />, value: "100+", label: "Products" },
+    { icon: <Users className="w-8 h-8" />, value: "500+", label: "Happy Clients" },
+    { icon: <Globe className="w-8 h-8" />, value: "25+", label: "Countries" },
+    { icon: <Award className="w-8 h-8" />, value: "10+", label: "Years of Experience" },
+    { icon: <BadgeCheck className="w-8 h-8" />, value: "100%", label: "Quality Commitment" },
   ];
 
   return (
     <section id="about" className="py-24 bg-secondary/30">
       <div className="container mx-auto px-4">
-        <div ref={headerRef} className={`max-w-4xl mx-auto text-center mb-16 reveal ${headerVisible ? "visible" : ""}`}>
-          <span className="text-accent font-medium tracking-wider uppercase text-sm">About Us</span>
-          <h2 className="font-serif text-3xl md:text-5xl font-bold mt-4 mb-6">
-            From Farm to Global Markets
-          </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-            Royal Agro Ventures is a professionally managed agri-export company committed to supplying 
-            high-quality agricultural and dehydrated food products to domestic and international markets.
-          </p>
-          <p className="text-muted-foreground leading-relaxed mb-6">
-            We work directly with farmers, ensuring traceability, consistent quality, and fair sourcing practices. 
-            Every product is carefully selected, graded, and processed under strict hygiene and food safety standards.
-          </p>
-          <p className="text-muted-foreground leading-relaxed">
-            Our dehydration and processing methods are designed to retain natural color, flavor, aroma, and 
-            nutritional value, while meeting global quality expectations. From raw material procurement to 
-            final packaging, each stage follows controlled procedures to ensure safe, export-ready products.
-          </p>
-        </div>
+        <div
+          ref={contentRef}
+          className={`grid lg:grid-cols-2 gap-12 items-center mb-14 reveal ${contentVisible ? "visible" : ""}`}
+        >
+          {/* Left: Text */}
+          <div>
+            <h2 className="font-serif text-3xl md:text-5xl font-bold mb-6">
+              About Royal Agro Ventures
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+              Royal Agro Ventures is a trusted exporter and supplier of premium
+              agricultural products from India. We connect Indian farmers and
+              producers with global markets through our quality products,
+              transparent practices and reliable supply chain.
+            </p>
+            <ul className="space-y-4">
+              {highlights.map((item, index) => (
+                <li key={index} className="flex items-center gap-3">
+                  <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
+                  <span className="font-medium text-foreground">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <div ref={cardsRef} className={`grid md:grid-cols-3 gap-8 mb-16 stagger-children ${cardsVisible ? "visible" : ""}`}>
-          {highlights.map((item, index) => (
-            <div
-              key={index}
-              className="bg-background rounded-2xl p-8 shadow-sm hover:shadow-lg transition-all duration-300 border border-border/50 text-center group"
-            >
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 text-primary rounded-2xl mb-6 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                {item.icon}
-              </div>
-              <h3 className="font-serif text-xl font-semibold mb-3">{item.title}</h3>
-              <p className="text-muted-foreground">{item.description}</p>
+          {/* Right: Image collage */}
+          <div className="space-y-4">
+            <div className="overflow-hidden rounded-2xl shadow-lg">
+              <img
+                src={aboutFarmer}
+                alt="Indian farmer holding a basket of fresh vegetables in a green farm field"
+                loading="lazy"
+                width={1024}
+                height={768}
+                className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-500"
+              />
             </div>
-          ))}
+            <div className="grid grid-cols-3 gap-4">
+              {[
+                { src: aboutWarehouse, alt: "Agricultural warehouse with fresh produce crates" },
+                { src: aboutFacility, alt: "Food processing facility with vegetable conveyor line" },
+                { src: aboutStorage, alt: "Storage warehouse aisle with grain bags on racks" },
+              ].map((img, index) => (
+                <div key={index} className="overflow-hidden rounded-xl shadow-md">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    loading="lazy"
+                    width={768}
+                    height={512}
+                    className="w-full aspect-[3/2] object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div ref={quoteRef} className={`bg-primary rounded-3xl p-8 md:p-12 text-primary-foreground text-center reveal-scale ${quoteVisible ? "visible" : ""}`}>
-          <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
-            "At Royal Agro Ventures, we focus on <span className="font-semibold">quality, reliability, and long-term partnerships</span>, 
-            helping buyers source dependable agricultural products with confidence."
-          </p>
+        {/* Stats bar */}
+        <div
+          ref={statsRef}
+          className={`bg-primary rounded-3xl px-8 py-10 reveal-scale ${statsVisible ? "visible" : ""}`}
+        >
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 stagger-children visible">
+            {stats.map((stat, index) => (
+              <div key={index} className="flex items-center gap-4 text-primary-foreground">
+                <div className="flex items-center justify-center w-14 h-14 rounded-full border-2 border-primary-foreground/40 flex-shrink-0">
+                  {stat.icon}
+                </div>
+                <div>
+                  <div className="font-serif text-2xl md:text-3xl font-bold">{stat.value}</div>
+                  <div className="text-sm text-primary-foreground/80">{stat.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
