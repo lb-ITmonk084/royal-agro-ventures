@@ -1,69 +1,88 @@
-import { ArrowDown, Leaf } from "lucide-react";
+import { Leaf, ShieldCheck, Package, Globe, FileCheck, Tractor } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logoImg from "@/assets/logo.png";
+import heroBg from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
+  const badges = [
+    { icon: <Tractor className="w-8 h-8" />, title: "Direct Sourcing", subtitle: "From Indian Farms" },
+    { icon: <ShieldCheck className="w-8 h-8" />, title: "Quality Assured", subtitle: "At Every Step" },
+    { icon: <Package className="w-8 h-8" />, title: "Bulk Supply", subtitle: "Competitive Pricing" },
+    { icon: <Globe className="w-8 h-8" />, title: "Global Delivery", subtitle: "On Time, Every Time" },
+    { icon: <FileCheck className="w-8 h-8" />, title: "Export Expertise", subtitle: "Documentation Support" },
+  ];
+
   return (
-    <section
-      id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden leaf-pattern pt-20"
-    >
-      {/* Logo Watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <img 
-          src={logoImg} 
-          alt="" 
-          className="w-[500px] h-[500px] object-contain opacity-[0.001]"
+    <section id="home" className="relative min-h-screen flex flex-col pt-20">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={heroBg}
+          alt="Indian farmland with tractor and export cargo ship at sunset"
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover"
         />
+        {/* Readability overlay — stronger on the left where text sits */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/50 to-background/10" />
       </div>
-      
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-48 h-48 bg-accent/10 rounded-full blur-3xl" />
-      
-      <div className="container mx-auto px-4 py-20 text-center relative z-10">
-        <div className="animate-fade-up">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
-            <Leaf size={18} />
-            <span className="text-sm font-medium">Since 2021</span>
-          </div>
-          
-          <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            From Farm to{" "}
-            <span className="text-gradient">Global</span>
-            <br />
-            <span className="text-gradient">Markets</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Direct farmer sourcing, hygienic processing, and export-ready 
-            agricultural products you can rely on.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-              onClick={() => document.getElementById("products")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              Explore Products
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg font-medium rounded-full transition-all duration-300"
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-            >
-              Get in Touch
-            </Button>
+
+      {/* Hero Content */}
+      <div className="relative z-10 flex-1 flex items-center">
+        <div className="container mx-auto px-4 py-20">
+          <div className="max-w-2xl animate-fade-up">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
+              <span className="text-foreground">Premium Indian</span>
+              <br />
+              <span className="text-primary">Agricultural Products</span>
+              <br />
+              <span className="text-foreground">for Global Markets</span>
+            </h1>
+
+            <p className="text-lg md:text-xl font-medium text-foreground mb-2">
+              From Indian Farms to the World.
+            </p>
+            <p className="text-base md:text-lg text-muted-foreground mb-10">
+              Sourced with Care. Delivered with Trust.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-base font-semibold rounded-md shadow-lg hover:shadow-xl transition-all duration-300 uppercase tracking-wide"
+                onClick={() => document.getElementById("products")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                Explore Products
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-background border-2 border-border text-foreground hover:bg-secondary px-8 py-6 text-base font-semibold rounded-md shadow-lg transition-all duration-300 uppercase tracking-wide"
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                Request Export Quote
+              </Button>
+            </div>
           </div>
         </div>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-          <a href="#about" className="text-primary/60 hover:text-primary transition-colors">
-            <ArrowDown size={28} />
-          </a>
+      </div>
+
+      {/* Trust Badge Strip */}
+      <div className="relative z-10 bg-background/95 backdrop-blur-sm border-t border-border">
+        <div className="container mx-auto px-4 py-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+            {badges.map((badge, index) => (
+              <div key={index} className="flex items-center gap-3 justify-center">
+                <div className="text-primary shrink-0">{badge.icon}</div>
+                <div>
+                  <p className="font-semibold text-sm text-foreground flex items-center gap-1">
+                    <Leaf className="w-3 h-3 text-primary hidden" />
+                    {badge.title}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{badge.subtitle}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
