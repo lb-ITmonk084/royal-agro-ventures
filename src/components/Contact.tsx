@@ -20,7 +20,7 @@ const Contact = () => {
 
         <div ref={cardsRef} className={`grid md:grid-cols-3 gap-8 max-w-4xl mx-auto stagger-children ${cardsVisible ? "visible" : ""}`}>
           <div className="text-center p-8 bg-primary-foreground/10 rounded-2xl backdrop-blur-sm">
-            <div className="inline-flex items-center justify-center w-14 h-14 bg-accent text-accent-foreground rounded-full mb-5">
+            <div className="inline-flex items-center justify-center w-12 h-14 bg-accent text-accent-foreground rounded-full mb-5">
               <Phone className="w-6 h-6" />
             </div>
             <h3 className="font-serif text-xl font-semibold mb-4">Phone</h3>
@@ -32,7 +32,7 @@ const Contact = () => {
           </div>
 
           <div className="text-center p-8 bg-primary-foreground/10 rounded-2xl backdrop-blur-sm">
-            <div className="inline-flex items-center justify-center w-14 h-14 bg-accent text-accent-foreground rounded-full mb-5">
+            <div className="inline-flex items-center justify-center w-12 h-14 bg-accent text-accent-foreground rounded-full mb-5">
               <Mail className="w-6 h-6" />
             </div>
             <h3 className="font-serif text-xl font-semibold mb-4">Email</h3>
@@ -47,7 +47,7 @@ const Contact = () => {
           </div>
 
           <div className="text-center p-8 bg-primary-foreground/10 rounded-2xl backdrop-blur-sm">
-            <div className="inline-flex items-center justify-center w-14 h-14 bg-accent text-accent-foreground rounded-full mb-5">
+            <div className="inline-flex items-center justify-center w-12 h-14 bg-accent text-accent-foreground rounded-full mb-5">
               <MapPin className="w-6 h-6" />
             </div>
             <h3 className="font-serif text-xl font-semibold mb-4">Address</h3>

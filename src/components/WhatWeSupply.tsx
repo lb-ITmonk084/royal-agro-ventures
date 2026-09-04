@@ -43,8 +43,8 @@ const WhatWeSupply = () => {
                   src={cat.image}
                   alt={cat.title}
                   loading="lazy"
-                  width={800}
-                  height={600}
+                  width={100}
+                  height={100}
                   className="w-full aspect-square object-cover group-hover:scale-110 transition-transform duration-500"
                 />
               </div>

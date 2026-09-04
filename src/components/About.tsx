@@ -17,7 +17,7 @@ const About = () => {
   ];
 
   const stats = [
-    { icon: <Package className="w-8 h-8" />, value: "100+", label: "Products" },
+    { icon: <Package className="w-8 h-8" />, value: "10+", label: "Products" },
     { icon: <Users className="w-8 h-8" />, value: "500+", label: "Happy Clients" },
     { icon: <Globe className="w-8 h-8" />, value: "25+", label: "Countries" },
     { icon: <Award className="w-8 h-8" />, value: "10+", label: "Years of Experience" },
